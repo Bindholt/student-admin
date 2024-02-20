@@ -40,7 +40,7 @@ public class StudentController {
     public ResponseEntity<Student> updateStudent(@PathVariable int id, @RequestBody Student student) {
         var studentToUpdate = studentRepository.findById(id);
         if (studentToUpdate.isPresent()) {
-            Student updatedStudent  = studentToUpdate.get();
+            Student updatedStudent = studentToUpdate.get();
             updatedStudent.setFirstName(student.getFirstName());
             updatedStudent.setMiddleName(student.getMiddleName());
             updatedStudent.setLastName(student.getLastName());

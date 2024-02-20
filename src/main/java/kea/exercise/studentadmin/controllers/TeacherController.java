@@ -12,16 +12,13 @@ import java.util.Optional;
 @RequestMapping("/teachers")
 public class TeacherController {
     private final TeacherRepository teacherRepository;
-
     public TeacherController(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
-
     @GetMapping
     public List<Teacher> getAll() {
         return teacherRepository.findAll();
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Teacher>> getTeacherById(@PathVariable int id) {
         var teacher = teacherRepository.findById(id);
@@ -30,12 +27,10 @@ public class TeacherController {
         }
         return ResponseEntity.ok(teacher);
     }
-
     @PostMapping
     public Teacher createTeacher(@RequestBody Teacher teacher) {
         return teacherRepository.save(teacher);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<Teacher> updateTeacher(@PathVariable int id, @RequestBody Teacher teacher) {
         var teacherToUpdate = teacherRepository.findById(id);
