@@ -33,6 +33,19 @@ public class Student {
         this.schoolYear = schoolYear;
     }
 
+    public Student(String fullName) {
+        setFullName(fullName);
+        // Leave other attributes as null
+        this.id = null;
+        this.dateOfBirth = null;
+        this.house = null;
+        this.prefect = false;
+        this.enrollmentYear = 0;
+        this.graduationYear = 0;
+        this.graduated = false;
+        this.schoolYear = 0;
+    }
+
     public Student() {
     }
 
