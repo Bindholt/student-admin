@@ -1,63 +1,57 @@
 package kea.exercise.studentadmin.controllers;
 
+import kea.exercise.studentadmin.dtos.teacher.TeacherRequestDTO;
+import kea.exercise.studentadmin.dtos.teacher.TeacherResponseDTO;
 import kea.exercise.studentadmin.models.Teacher;
-import kea.exercise.studentadmin.repositories.TeacherRepository;
+import kea.exercise.studentadmin.services.TeacherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/teachers")
 public class TeacherController {
-    private final TeacherRepository teacherRepository;
-    public TeacherController(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
+    private final TeacherService teacherService;
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
     }
     @GetMapping
-    public List<Teacher> getAll() {
-        return teacherRepository.findAll();
+    public List<TeacherResponseDTO> getAll() {
+        return teacherService.findAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Teacher>> getTeacherById(@PathVariable int id) {
-        var teacher = teacherRepository.findById(id);
+    public ResponseEntity<Optional<TeacherResponseDTO>> getTeacherById(@PathVariable int id) {
+        var teacher = teacherService.findById(id);
         if (teacher.isEmpty()){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(teacher);
     }
     @PostMapping
-    public Teacher createTeacher(@RequestBody Teacher teacher) {
-        return teacherRepository.save(teacher);
+    public TeacherResponseDTO createTeacher(@RequestBody TeacherRequestDTO teacher) {
+        return teacherService.save(teacher);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable int id, @RequestBody Teacher teacher) {
-        var teacherToUpdate = teacherRepository.findById(id);
-        if (teacherToUpdate.isPresent()) {
-            Teacher updatedTeacher  = teacherToUpdate.get();
-            updatedTeacher.setFirstName(teacher.getFirstName());
-            updatedTeacher.setMiddleName(teacher.getMiddleName());
-            updatedTeacher.setLastName(teacher.getLastName());
-            updatedTeacher.setDateOfBirth(teacher.getDateOfBirth());
-            updatedTeacher.setHouse(teacher.getHouse());
-            updatedTeacher.setHeadOfHouse(teacher.isHeadOfHouse());
-            updatedTeacher.setEmploymentType(teacher.getEmploymentType());
-            updatedTeacher.setEmploymentStart(teacher.getEmploymentStart());
-            updatedTeacher.setEmploymentEnd(teacher.getEmploymentEnd());
-            teacherRepository.save(updatedTeacher);
-            return ResponseEntity.ok(updatedTeacher);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<TeacherResponseDTO> updateTeacher(@PathVariable Long id, @RequestBody TeacherRequestDTO teacher) {
+        return ResponseEntity.of(teacherService.updateIfExists(id, teacher));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<TeacherResponseDTO> updateTeacherFields(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+        return ResponseEntity.of(teacherService.updateTeacherByFields(id, fields));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Teacher> deleteTeacher(@PathVariable int id) {
-        var teacher = teacherRepository.findById(id);
+        var teacher = teacherService.findById(id);
         if (teacher.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        teacherRepository.deleteById(id);
+        teacherService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

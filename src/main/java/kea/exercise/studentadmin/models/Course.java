@@ -9,7 +9,7 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String subject;
     private int schoolYear;
     private boolean current;
@@ -17,7 +17,7 @@ public class Course {
     private @ManyToOne(fetch = FetchType.EAGER) Teacher teacher;
     private @ManyToMany(fetch = FetchType.EAGER) List<Student> students = new ArrayList<>();
 
-    public Course(int id, String subject, int schoolYear, boolean current, Teacher teacher, List<Student> students) {
+    public Course(Long id, String subject, int schoolYear, boolean current, Teacher teacher, List<Student> students) {
         this.id = id;
         this.subject = subject;
         this.schoolYear = schoolYear;
@@ -29,11 +29,11 @@ public class Course {
     public Course() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

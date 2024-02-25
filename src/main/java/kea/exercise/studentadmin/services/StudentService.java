@@ -7,8 +7,11 @@ import kea.exercise.studentadmin.dtos.student.StudentResponseDTOMapper;
 import kea.exercise.studentadmin.models.Student;
 import kea.exercise.studentadmin.repositories.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -51,13 +54,27 @@ public class StudentService {
         return Optional.empty();
     }
 
-    public Optional<StudentResponseDTO> updateIfExists(int id, StudentRequestDTO student) {
+    public Optional<StudentResponseDTO> updateIfExists(Long id, StudentRequestDTO student) {
         if (studentRepository.existsById(id)) {
             Student entity = studentRequestDTOMapper.apply(student);
             entity.setId(id);
             return Optional.of(studentResponseDTOMapper.apply(studentRepository.save(entity)));
         }
         return Optional.empty();
+    }
+
+    public Optional<StudentResponseDTO> updateStudentByFields(int id, Map<String, Object> fields) {
+        Optional<Student> studentToUpdate = studentRepository.findById(id);
+
+        studentToUpdate.ifPresent(student -> fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Student.class, key);
+            if (field != null) {
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, student, value);
+            }
+        }));
+
+        return studentToUpdate.map(studentRepository::save).map(studentResponseDTOMapper);
     }
 }
 

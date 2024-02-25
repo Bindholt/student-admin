@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -20,7 +20,7 @@ public class Teacher {
     private LocalDate employmentStart;
     private LocalDate employmentEnd;
 
-    public Teacher(int id, String firstName, String middleName, String lastName, LocalDate dateOfBirth, House house, boolean headOfHouse, EmpType employmentType, LocalDate employmentStart, LocalDate employmentEnd) {
+    public Teacher(Long id, String firstName, String middleName, String lastName, LocalDate dateOfBirth, House house, boolean headOfHouse, EmpType employmentType, LocalDate employmentStart, LocalDate employmentEnd) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -36,11 +36,11 @@ public class Teacher {
     public Teacher() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -30,15 +30,11 @@ public class StudentRequestDTOMapper implements Function<StudentRequestDTO, Stud
         student.setEnrollmentYear(studentRequestDTO.enrollmentYear());
         student.setGraduationYear(studentRequestDTO.graduationYear());
         student.setGraduated(studentRequestDTO.graduated());
-
-        if (studentRequestDTO.house() != null){
-            Optional<House> house = houseRepository.findById(studentRequestDTO.house());
-
-            if (house.isPresent()) {
-                student.setHouse(house.get());
-            } else {
-                student.setHouse(null);
-            }
+        Optional<House> house = houseRepository.findById(studentRequestDTO.house());
+        if (house.isPresent()) {
+            student.setHouse(house.get());
+        } else {
+            student.setHouse(null);
         }
 
         return student;

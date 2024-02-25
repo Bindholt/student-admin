@@ -3,7 +3,7 @@ package kea.exercise.studentadmin.dtos.student;
 import java.time.LocalDate;
 
 public record StudentResponseDTO (
-        int id,
+        Long id,
         String firstName,
         String middleName,
         String lastName,

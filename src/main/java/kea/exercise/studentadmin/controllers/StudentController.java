@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,8 +39,13 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable int id, @RequestBody StudentRequestDTO student) {
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id, @RequestBody StudentRequestDTO student) {
         return ResponseEntity.of(studentService.updateIfExists(id, student));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> updateStudentFields(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+        return ResponseEntity.of(studentService.updateStudentByFields(id, fields));
     }
 
     @DeleteMapping("/{id}")
