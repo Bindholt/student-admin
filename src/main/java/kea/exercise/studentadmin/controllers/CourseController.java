@@ -30,7 +30,7 @@ public class CourseController {
         return courseRepository.findAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Course>> getCourseById(@PathVariable int id) {
+    public ResponseEntity<Optional<Course>> getCourseById(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -38,7 +38,7 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
     @GetMapping("/{id}/teacher")
-    public ResponseEntity<Teacher> getTeacherByCourseId(@PathVariable int id) {
+    public ResponseEntity<Teacher> getTeacherByCourseId(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -51,7 +51,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}/students")
-    public ResponseEntity<List<Student>> getStudentsByCourseId(@PathVariable int id) {
+    public ResponseEntity<List<Student>> getStudentsByCourseId(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -69,7 +69,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable int id, @RequestBody Course course) {
+    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course course) {
         var courseToUpdate = courseRepository.findById(id);
         if (courseToUpdate.isPresent()) {
             Course updatedCourse  = courseToUpdate.get();
@@ -85,7 +85,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}/teacher")
-    public ResponseEntity<Course> updateTeacher(@PathVariable int id, @RequestBody Teacher teacher) {
+    public ResponseEntity<Course> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
         var courseToUpdate = courseRepository.findById(id);
         if (courseToUpdate.isPresent()) {
             Course updatedCourse  = courseToUpdate.get();
@@ -97,7 +97,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}/students")
-    public ResponseEntity<Course> updateStudents(@PathVariable int id, @RequestBody List<Student> students) {
+    public ResponseEntity<Course> updateStudents(@PathVariable Long id, @RequestBody List<Student> students) {
         var courseToUpdate = courseRepository.findById(id);
         if (courseToUpdate.isPresent()) {
             Course updatedCourse  = courseToUpdate.get();
@@ -109,7 +109,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Course> deleteCourse(@PathVariable int id) {
+    public ResponseEntity<Course> deleteCourse(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -119,7 +119,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}/teacher")
-    public ResponseEntity<Course> deleteTeacher(@PathVariable int id) {
+    public ResponseEntity<Course> deleteTeacher(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -131,7 +131,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}/students")
-    public ResponseEntity<Course> deleteStudents(@PathVariable int id) {
+    public ResponseEntity<Course> deleteStudents(@PathVariable Long id) {
         var course = courseRepository.findById(id);
         if (course.isEmpty()) {
             return ResponseEntity.notFound().build();

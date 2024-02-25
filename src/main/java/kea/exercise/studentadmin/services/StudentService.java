@@ -31,7 +31,7 @@ public class StudentService {
         return studentRepository.findAll().stream().map(studentResponseDTOMapper).toList();
     }
 
-    public Optional<StudentResponseDTO> findById(int id) {
+    public Optional<StudentResponseDTO> findById(Long id) {
         return studentRepository.findById(id).map(studentResponseDTOMapper);
     }
 
@@ -41,7 +41,7 @@ public class StudentService {
         return studentResponseDTOMapper.apply(newStudent);
     }
 
-    public Optional<StudentResponseDTO> deleteById(int id) {
+    public Optional<StudentResponseDTO> deleteById(Long id) {
         Optional<Student> studentToDelete = studentRepository.findById(id);
 
         if(studentToDelete.isPresent()) {
@@ -63,7 +63,7 @@ public class StudentService {
         return Optional.empty();
     }
 
-    public Optional<StudentResponseDTO> updateStudentByFields(int id, Map<String, Object> fields) {
+    public Optional<StudentResponseDTO> updateStudentByFields(Long id, Map<String, Object> fields) {
         Optional<Student> studentToUpdate = studentRepository.findById(id);
 
         studentToUpdate.ifPresent(student -> fields.forEach((key, value) -> {

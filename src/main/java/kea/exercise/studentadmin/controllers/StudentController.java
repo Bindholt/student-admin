@@ -25,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<StudentResponseDTO>> getStudentById(@PathVariable int id) {
+    public ResponseEntity<Optional<StudentResponseDTO>> getStudentById(@PathVariable Long id) {
         var student = studentService.findById(id);
         if (student.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -44,12 +44,12 @@ public class StudentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> updateStudentFields(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+    public ResponseEntity<StudentResponseDTO> updateStudentFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return ResponseEntity.of(studentService.updateStudentByFields(id, fields));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> deleteStudent(@PathVariable int id) {
+    public ResponseEntity<StudentResponseDTO> deleteStudent(@PathVariable Long id) {
         return ResponseEntity.of(studentService.deleteById(id));
     }
 }

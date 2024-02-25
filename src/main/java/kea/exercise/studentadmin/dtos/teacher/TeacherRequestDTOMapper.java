@@ -30,11 +30,7 @@ public class TeacherRequestDTOMapper implements Function<TeacherRequestDTO, Teac
         teacher.setEmploymentStart(teacherRequestDTO.employmentStart());
         teacher.setEmploymentEnd(teacherRequestDTO.employmentEnd());
         Optional<House> house = houseRepository.findById(teacherRequestDTO.house());
-        if (house.isPresent()) {
-            teacher.setHouse(house.get());
-        } else {
-            teacher.setHouse(null);
-        }
+        house.ifPresent(teacher::setHouse);
 
         return teacher;
 

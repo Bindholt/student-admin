@@ -30,7 +30,7 @@ public class TeacherService {
         return teacherRepository.findAll().stream().map(teacherResponseDTOMapper).toList();
     }
 
-    public Optional<TeacherResponseDTO> findById(int id) {
+    public Optional<TeacherResponseDTO> findById(Long id) {
         return teacherRepository.findById(id).map(teacherResponseDTOMapper);
     }
 
@@ -50,7 +50,7 @@ public class TeacherService {
         return Optional.empty();
     }
 
-    public Optional<TeacherResponseDTO> deleteById(int id) {
+    public Optional<TeacherResponseDTO> deleteById(Long id) {
         Optional<Teacher> teacherToDelete = teacherRepository.findById(id);
         if (teacherToDelete.isPresent()) {
             TeacherResponseDTO teacherResponse = teacherResponseDTOMapper.apply(teacherToDelete.get());
@@ -60,7 +60,7 @@ public class TeacherService {
         return Optional.empty();
     }
 
-    public Optional<TeacherResponseDTO> updateTeacherByFields(int id, Map<String, Object> fields) {
+    public Optional<TeacherResponseDTO> updateTeacherByFields(Long id, Map<String, Object> fields) {
         Optional<Teacher> teacherToUpdate = teacherRepository.findById(id);
         teacherToUpdate.ifPresent(teacher -> fields.forEach((key,value) -> {
             Field field = ReflectionUtils.findField(Teacher.class, key);
