@@ -1,9 +1,9 @@
 package kea.exercise.studentadmin.services;
 
-import kea.exercise.studentadmin.dtos.StudentRequestDTO;
-import kea.exercise.studentadmin.dtos.StudentRequestDTOMapper;
-import kea.exercise.studentadmin.dtos.StudentResponseDTO;
-import kea.exercise.studentadmin.dtos.StudentResponseDTOMapper;
+import kea.exercise.studentadmin.dtos.student.StudentRequestDTO;
+import kea.exercise.studentadmin.dtos.student.StudentRequestDTOMapper;
+import kea.exercise.studentadmin.dtos.student.StudentResponseDTO;
+import kea.exercise.studentadmin.dtos.student.StudentResponseDTOMapper;
 import kea.exercise.studentadmin.models.Student;
 import kea.exercise.studentadmin.repositories.StudentRepository;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package kea.exercise.studentadmin.controllers;
 
-import kea.exercise.studentadmin.dtos.StudentRequestDTO;
-import kea.exercise.studentadmin.dtos.StudentResponseDTO;
+import kea.exercise.studentadmin.dtos.student.StudentRequestDTO;
+import kea.exercise.studentadmin.dtos.student.StudentResponseDTO;
 import kea.exercise.studentadmin.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

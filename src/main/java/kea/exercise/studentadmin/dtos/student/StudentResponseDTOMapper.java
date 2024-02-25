@@ -1,4 +1,4 @@
-package kea.exercise.studentadmin.dtos;
+package kea.exercise.studentadmin.dtos.student;
 import org.springframework.stereotype.Service;
 import kea.exercise.studentadmin.models.Student;
 import java.util.function.Function;

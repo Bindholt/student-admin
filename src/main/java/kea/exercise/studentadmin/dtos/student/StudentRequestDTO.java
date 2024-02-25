@@ -1,4 +1,4 @@
-package kea.exercise.studentadmin.dtos;
+package kea.exercise.studentadmin.dtos.student;
 
 import java.time.LocalDate;
 
