@@ -1,7 +1,8 @@
 package kea.exercise.studentadmin.controllers;
 
-import kea.exercise.studentadmin.models.Student;
-import kea.exercise.studentadmin.repositories.StudentRepository;
+import kea.exercise.studentadmin.dtos.StudentRequestDTO;
+import kea.exercise.studentadmin.dtos.StudentResponseDTO;
+import kea.exercise.studentadmin.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +12,20 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping
-    public List<Student> getAll() {
-        return studentRepository.findAll();
+    public List<StudentResponseDTO> getAll() {
+        return studentService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Student>> getStudentById(@PathVariable int id) {
-        var student = studentRepository.findById(id);
+    public ResponseEntity<Optional<StudentResponseDTO>> getStudentById(@PathVariable int id) {
+        var student = studentService.findById(id);
         if (student.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -32,35 +33,17 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+    public StudentResponseDTO createStudent(@RequestBody StudentRequestDTO student) {
+        return studentService.save(student);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable int id, @RequestBody Student student) {
-        var studentToUpdate = studentRepository.findById(id);
-        if (studentToUpdate.isPresent()) {
-            Student updatedStudent = studentToUpdate.get();
-            updatedStudent.setFirstName(student.getFirstName());
-            updatedStudent.setMiddleName(student.getMiddleName());
-            updatedStudent.setLastName(student.getLastName());
-            updatedStudent.setDateOfBirth(student.getDateOfBirth());
-            updatedStudent.setHouse(student.getHouse());
-            updatedStudent.setPrefect(student.isPrefect());
-            updatedStudent.setEnrollmentYear(student.getEnrollmentYear());
-            studentRepository.save(updatedStudent);
-            return ResponseEntity.ok(updatedStudent);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable int id, @RequestBody StudentRequestDTO student) {
+        return ResponseEntity.of(studentService.updateIfExists(id, student));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable int id) {
-        var student = studentRepository.findById(id);
-        if (student.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        studentRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<StudentResponseDTO> deleteStudent(@PathVariable int id) {
+        return ResponseEntity.of(studentService.deleteById(id));
     }
 }

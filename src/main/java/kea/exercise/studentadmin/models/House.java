@@ -7,30 +7,19 @@ import java.util.List;
 @Entity
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String name;
     private String founder;
     private @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "colors", joinColumns = @JoinColumn(name = "house_id"))
     List<String> colors;
 
-    public House(int id, String name, String founder, List<String> colors) {
-        this.id = id;
+    public House(String name, String founder, List<String> colors) {
         this.name = name;
         this.founder = founder;
         this.colors = colors;
     }
 
     public House() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -1,7 +1,6 @@
 package kea.exercise.studentadmin.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -18,8 +17,9 @@ public class Student {
     private int enrollmentYear;
     private int graduationYear;
     private boolean graduated;
+    private int schoolYear;
 
-    public Student(int id, String firstName, String middleName, String lastName, LocalDate dateOfBirth, House house, boolean prefect, int enrollmentYear, int graduationYear, boolean graduated) {
+    public Student(int id, String firstName, String middleName, String lastName, LocalDate dateOfBirth, House house, boolean prefect, int enrollmentYear, int graduationYear, boolean graduated, int schoolYear) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -30,6 +30,7 @@ public class Student {
         this.enrollmentYear = enrollmentYear;
         this.graduationYear = graduationYear;
         this.graduated = graduated;
+        this.schoolYear = schoolYear;
     }
 
     public Student() {
@@ -65,6 +66,29 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return hasMiddleName() ? this.firstName + " " + this.middleName + " " + this.lastName : this.firstName + " " + this.lastName;
+    }
+
+    public boolean hasMiddleName() {
+        return this.middleName != null;
+    }
+
+    public void setFullName(String fullName) {
+        if(fullName == null) return;
+        String[] names = fullName.split(" ");
+        if (names.length == 1) {
+            firstName = names[0];
+        } else if (names.length == 2) {
+            firstName = names[0];
+            lastName = names[1];
+        } else {
+            firstName = names[0];
+            middleName = names[1];
+            lastName = names[2];
+        }
     }
 
     public LocalDate getDateOfBirth() {
@@ -115,5 +139,11 @@ public class Student {
         this.graduated = graduated;
     }
 
+    public int getSchoolYear() {
+        return schoolYear;
+    }
 
+    public void setSchoolYear(int schoolYear) {
+        this.schoolYear = schoolYear;
+    }
 }
